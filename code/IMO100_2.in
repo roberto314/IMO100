@@ -1,0 +1,486 @@
+#
+GLOBAL {
+    OUTPUTNAME "IMO100_2.asm";
+    INPUTNAME   "IMO100.bin";
+    STARTADDR  $8000;
+    PAGELENGTH 0;          #No paging
+    CPU        "m740";
+    LABELBREAK 0;
+};
+
+# External SRAM
+	LABEL { NAME "X2000";   ADDR  $2000; }; #init 0x14
+	LABEL { NAME "X2001";   ADDR  $2001; }; #init 0xc0
+	LABEL { NAME "X2002";   ADDR  $2002; }; #init 0
+	LABEL { NAME "ISR_X2003";   ADDR  $2003; };
+	LABEL { NAME "ISR_X2004";   ADDR  $2004; };
+	LABEL { NAME "ISR_X2005";   ADDR  $2005; };
+	LABEL { NAME "ISR_X2006";   ADDR  $2006; };
+	LABEL { NAME "ISR_X2007";   ADDR  $2007; };
+	LABEL { NAME "ISR_X2008";   ADDR  $2008; }; #init 0
+	LABEL { NAME "ISR_X2009";   ADDR  $2009; }; #init 0
+	LABEL { NAME "ISR_X200a";   ADDR  $200a; }; #init 0
+	LABEL { NAME "ISR_X200b";   ADDR  $200b; }; #init 0
+	LABEL { NAME "ISR_X200c";   ADDR  $200c; }; #init 0
+	LABEL { NAME "ISR_X200d";   ADDR  $200d; }; #init 0
+	LABEL { NAME "ISR_X200e";   ADDR  $200e; }; #init 0
+	LABEL { NAME "ISR_X200f";   ADDR  $200f; }; #init 0
+	LABEL { NAME "ISR_X2010";   ADDR  $2010; }; #init 0
+	LABEL { NAME "ISR_X2011";   ADDR  $2011; }; #init 0
+	LABEL { NAME "ISR_X2012";   ADDR  $2012; }; #init 0x20
+	LABEL { NAME "ISR_X2013";   ADDR  $2013; }; #init 0
+	LABEL { NAME "ISR_X2014";   ADDR  $2014; }; #init 0
+	LABEL { NAME "ISR_X2015";   ADDR  $2015; }; #init 0
+	LABEL { NAME "Gesamtkm_Lo";   ADDR  $2016; }; #init 0
+	LABEL { NAME "Gesamtkm_Mid";   ADDR  $2017; }; #init 0
+	LABEL { NAME "Gesamtkm_Hi";   ADDR  $2018; }; #init 0
+	LABEL { NAME "LCD_Show_Screen";   ADDR  $2019; };
+	LABEL { NAME "RAMCHK_1";   ADDR  $201a; }; #should be 0x99
+	LABEL { NAME "RAMCHK_2";   ADDR  $201b; }; #should be 0x66
+	LABEL { NAME "X201c";   ADDR  $201c; }; #init 0x80
+	LABEL { NAME "X201d";   ADDR  $201d; }; #init 0x21
+	LABEL { NAME "SPI_DATA_IN201e";   ADDR  $201e; };
+	LABEL { NAME "SPI_DATA_OUT201f";   ADDR  $201f; };
+	LABEL { NAME "SPI_DATA2020";   ADDR  $2020; };
+	LABEL { NAME "SPI_DATA2021";   ADDR  $2021; };
+	LABEL { NAME "SPI_DATA2022";   ADDR  $2022; };
+	LABEL { NAME "SPI_DATA2023";   ADDR  $2023; };
+	LABEL { NAME "SPI_DATA2024";   ADDR  $2024; };
+	LABEL { NAME "SPI_2025";   ADDR  $2025; };
+	LABEL { NAME "SPI_2026";   ADDR  $2026; };
+	LABEL { NAME "SPI_2027";   ADDR  $2027; };
+
+	LABEL { NAME "X202c";   ADDR  $202c; };
+
+	LABEL { NAME "I2C_Data_out";   ADDR  $202f; };
+	LABEL { NAME "I2C_Data_in";   ADDR  $2030; };
+	LABEL { NAME "I2C_Address_Lo";   ADDR  $2031; };
+	LABEL { NAME "I2C_Address_HI";   ADDR  $2032; };
+	LABEL { NAME "I2C_2033";   ADDR  $2033; };
+	LABEL { NAME "I2C_2034";   ADDR  $2034; };
+	LABEL { NAME "I2C_2035";   ADDR  $2035; };
+	LABEL { NAME "X2036";   ADDR  $2036; };
+	LABEL { NAME "ScreenRow";   ADDR  $2037; }; #init 0x02
+	LABEL { NAME "ScreenColumn";   ADDR  $2038; };
+	LABEL { NAME "LCD_X2039";   ADDR  $2039; };
+	LABEL { NAME "LCD_X203a";   ADDR  $203a; };
+	LABEL { NAME "X203b";   ADDR  $203b; };
+	LABEL { NAME "X203c";   ADDR  $203c; };
+	LABEL { NAME "GesamtKM_Pos01";   ADDR  $203e; };
+	LABEL { NAME "GesamtKM_Pos02";   ADDR  $203f; };
+	LABEL { NAME "GesamtKM_Pos03";   ADDR  $2040; };
+	LABEL { NAME "GesamtKM_Pos04";   ADDR  $2041; };
+	LABEL { NAME "GesamtKM_Pos05";   ADDR  $2042; };
+	LABEL { NAME "GesamtKM_Pos06";   ADDR  $2043; };
+	LABEL { NAME "GesamtKM_Pos07";   ADDR  $2044; };
+	LABEL { NAME "GesamtKM_Pos09";   ADDR  $2046; };
+	LABEL { NAME "GesamtKM_Pos08";   ADDR  $2045; };
+	LABEL { NAME "GesamtKM_Pos10";   ADDR  $2047; };
+	LABEL { NAME "GesamtKM_Pos11";   ADDR  $2048; };
+	LABEL { NAME "GesamtKM_Pos12";   ADDR  $2049; };
+	LABEL { NAME "X204a";   ADDR  $204a; };
+	LABEL { NAME "X204b";   ADDR  $204b; };
+	LABEL { NAME "X204c";   ADDR  $204c; };
+	LABEL { NAME "X204d";   ADDR  $204d; };
+	LABEL { NAME "X204e";   ADDR  $204e; };
+	LABEL { NAME "DummyAddress";   ADDR  $204f; };
+	LABEL { NAME "X2050";   ADDR  $2050; };
+	LABEL { NAME "X2051";   ADDR  $2051; }; #init 0x01
+	LABEL { NAME "X2052";   ADDR  $2052; };
+	LABEL { NAME "X2053";   ADDR  $2053; };
+	LABEL { NAME "X2054";   ADDR  $2054; };
+	LABEL { NAME "X2055";   ADDR  $2055; };
+	LABEL { NAME "X2056";   ADDR  $2056; };
+	LABEL { NAME "X2057";   ADDR  $2057; };
+	LABEL { NAME "X2058";   ADDR  $2058; };
+	LABEL { NAME "X2059";   ADDR  $2059; };
+	LABEL { NAME "ISR_X205a";   ADDR  $205a; }; #init 0
+	LABEL { NAME "ISR_X205b";   ADDR  $205b; }; #init 0
+	LABEL { NAME "ISR_X205c";   ADDR  $205c; }; #init 0
+	LABEL { NAME "ISR_X205d";   ADDR  $205d; }; #init 0
+	LABEL { NAME "ISR_X205e";   ADDR  $205e; }; #init 0
+	LABEL { NAME "ISR_X205f";   ADDR  $205f; };
+	LABEL { NAME "RTC_SubSecondCounter";   ADDR  $2060; }; #init 0
+	LABEL { NAME "ISR_X2061";   ADDR  $2061; };
+	LABEL { NAME "X2062";   ADDR  $2062; };
+	LABEL { NAME "X2063";   ADDR  $2063; };
+	LABEL { NAME "X2064";   ADDR  $2064; };
+	LABEL { NAME "X2065";   ADDR  $2065; };
+	LABEL { NAME "X2066";   ADDR  $2066; };
+	LABEL { NAME "X2067";   ADDR  $2067; };
+	LABEL { NAME "X2068";   ADDR  $2068; }; #init 0xff
+	LABEL { NAME "ISR_X2069";   ADDR  $2069; }; #init 0
+	LABEL { NAME "ISR_X206a";   ADDR  $206a; }; #init 0
+	LABEL { NAME "ISR_X206b";   ADDR  $206b; }; #init 0
+	LABEL { NAME "ISR_X206c";   ADDR  $206c; }; #init 0
+	LABEL { NAME "X206d";   ADDR  $206d; };
+	LABEL { NAME "X206e";   ADDR  $206e; };
+	LABEL { NAME "X206f";   ADDR  $206f; };
+	LABEL { NAME "X2070";   ADDR  $2070; };
+	LABEL { NAME "X2071";   ADDR  $2071; };
+	LABEL { NAME "X2072";   ADDR  $2072; };
+	LABEL { NAME "X2073";   ADDR  $2073; };
+	#LABEL { NAME "X2072";   ADDR  $2072; };
+	LABEL { NAME "CharPTR_0L";   ADDR  $2074; };
+	LABEL { NAME "CharPTR_0H";   ADDR  $2075; };
+	LABEL { NAME "X2076Counter";   ADDR  $2076; };
+	LABEL { NAME "SRAM_Test_77";   ADDR  $2077; }; #init 0
+	LABEL { NAME "SRAM_Test_78";   ADDR  $2078; }; #init 0
+	LABEL { NAME "X2079";   ADDR  $2079; }; #init 0x0f
+
+
+
+# RAM
+	LABEL { NAME "StringPTR_0L"; ADDR $00; };
+	LABEL { NAME "StringPTR_0H"; ADDR $01; };
+	LABEL { NAME "RAM_02"; ADDR $02;};
+	LABEL { NAME "RAM_03"; ADDR $03;};
+	LABEL { NAME "RAM_04"; ADDR $04;};
+	LABEL { NAME "RAM_05"; ADDR $05;};
+	LABEL { NAME "RAM_06"; ADDR $06;};
+	LABEL { NAME "RAM_07"; ADDR $07;};
+	LABEL { NAME "FontPTR_0L"; ADDR $08; };
+	LABEL { NAME "FontPTR_0H"; ADDR $09; };
+	LABEL { NAME "ISR_RAM_0a"; ADDR $0a;};
+	LABEL { NAME "ISR_RAM_0b"; ADDR $0b;};
+	LABEL { NAME "ISR_RAM_0c"; ADDR $0c;};
+	LABEL { NAME "ISR_RAM_0d"; ADDR $0d;};
+	LABEL { NAME "ISR_RAM_0e"; ADDR $0e;};
+	LABEL { NAME "ISR_RAM_0f"; ADDR $0f;};
+	LABEL { NAME "ISR_RAM_10"; ADDR $10;};
+	LABEL { NAME "ISR_RAM_11"; ADDR $11;};
+
+	LABEL { NAME "Radumfang_Lo"; ADDR $14;};
+	LABEL { NAME "Radumfang_Hi"; ADDR $15;};
+	LABEL { NAME "copyR_umf_Lo"; ADDR $16;};
+	LABEL { NAME "copyR_umf_Hi"; ADDR $17;};
+
+	LABEL { NAME "ISR_RAM_18"; ADDR $18;};
+	LABEL { NAME "ISR_RAM_19"; ADDR $19;};
+	LABEL { NAME "ISR_RAM_1a"; ADDR $1a;};
+	LABEL { NAME "ISR_RAM_1b"; ADDR $1b;};
+	LABEL { NAME "ISR_RAM_1c"; ADDR $1c;};
+	LABEL { NAME "ISR_RAM_1d"; ADDR $1d;};
+
+	LABEL { NAME "ISR_RAM_20"; ADDR $20;};
+	LABEL { NAME "ISR_RAM_21"; ADDR $21;};
+	LABEL { NAME "ISR_RAM_22"; ADDR $22;};
+	LABEL { NAME "RAM_23"; ADDR $23;};
+	LABEL { NAME "RAM_24"; ADDR $24;};
+	LABEL { NAME "RAM_25"; ADDR $25;};
+	LABEL { NAME "RAM_26"; ADDR $26;};
+	LABEL { NAME "RAM_27"; ADDR $27;};
+	LABEL { NAME "RAM_28"; ADDR $28;};
+	LABEL { NAME "RAM_29"; ADDR $29;};
+	LABEL { NAME "RAM_2a"; ADDR $2a;};
+	LABEL { NAME "RAM_2b"; ADDR $2b;};
+	LABEL { NAME "RAM_2c"; ADDR $2c;};
+	LABEL { NAME "RAM_2d"; ADDR $2d;};
+	LABEL { NAME "RAM_2e"; ADDR $2e;};
+	LABEL { NAME "RAM_2f"; ADDR $2f;};
+	LABEL { NAME "RAM_30"; ADDR $30;};
+	LABEL { NAME "RAM_31"; ADDR $31;};
+	LABEL { NAME "RAM_32"; ADDR $32;};
+	LABEL { NAME "RAM_33"; ADDR $33;};
+	LABEL { NAME "RAM_34"; ADDR $34;};
+	LABEL { NAME "RAM_35"; ADDR $35;};
+	LABEL { NAME "RAM_36"; ADDR $36;};
+	LABEL { NAME "RAM_37"; ADDR $37;};
+	LABEL { NAME "RAM_38"; ADDR $38;};
+	LABEL { NAME "ISR_RAM_39"; ADDR $39;};
+	LABEL { NAME "ISR_RAM_3a"; ADDR $3a;};
+	LABEL { NAME "ISR_RAM_3b"; ADDR $3b;};
+	LABEL { NAME "ISR_RAM_3c"; ADDR $3c;};
+	LABEL { NAME "ISR_RAM_3d"; ADDR $3d;};
+	LABEL { NAME "RAM_3e"; ADDR $3e;};
+	LABEL { NAME "RAM_3f"; ADDR $3f;};
+	LABEL { NAME "RAM_40"; ADDR $40;};
+	LABEL { NAME "RAM_41"; ADDR $41;};
+	LABEL { NAME "RAM_42"; ADDR $42;};
+	LABEL { NAME "ISR_RAM_43"; ADDR $43;};
+	LABEL { NAME "ISR_RAM_44"; ADDR $44;};
+	LABEL { NAME "ISR_RAM_45"; ADDR $45;};
+	LABEL { NAME "ISR_RAM_46"; ADDR $46;};
+	LABEL { NAME "ISR_RAM_47"; ADDR $47;};
+	LABEL { NAME "ISR_RAM_48"; ADDR $48;};
+	LABEL { NAME "ISR_RAM_49"; ADDR $49;};
+	LABEL { NAME "RAM_4a"; ADDR $4a;};
+	LABEL { NAME "RAM_4b"; ADDR $4b;};
+	LABEL { NAME "RAM_4c"; ADDR $4c;};
+	LABEL { NAME "RAM_4d"; ADDR $4d;};
+	LABEL { NAME "RAM_4e"; ADDR $4e;};
+	LABEL { NAME "RAM_4f"; ADDR $4f;};
+	LABEL { NAME "RAM_50"; ADDR $50;};
+	LABEL { NAME "RAM_51"; ADDR $51;};
+	LABEL { NAME "RAM_52"; ADDR $52;};
+	LABEL { NAME "RAM_53"; ADDR $53;};
+	LABEL { NAME "ISR_RAM_54"; ADDR $54;};
+	LABEL { NAME "RAM_55"; ADDR $55;}; #init $03
+	LABEL { NAME "RAM_56"; ADDR $56;};
+	LABEL { NAME "RAM_57"; ADDR $57;};
+	LABEL { NAME "RAM_58"; ADDR $58;};
+	LABEL { NAME "RAM_59"; ADDR $59;};
+	LABEL { NAME "RAM_5a"; ADDR $5a;};
+	LABEL { NAME "RAM_5b"; ADDR $5b;};
+	LABEL { NAME "RAM_5c"; ADDR $5c;};
+	LABEL { NAME "RAM_5d"; ADDR $5d;};
+	LABEL { NAME "RAM_5e"; ADDR $5e;};
+	LABEL { NAME "RAM_5f"; ADDR $5f;};	
+
+	LABEL { NAME "RAM_63"; ADDR $63;};
+	LABEL { NAME "RAM_64"; ADDR $64;};
+	LABEL { NAME "RAM_65"; ADDR $65;};
+	LABEL { NAME "RAM_66"; ADDR $66;};
+	LABEL { NAME "RAM_67"; ADDR $67;};
+	LABEL { NAME "RAM_68"; ADDR $68;};
+	LABEL { NAME "RAM_6c"; ADDR $6c;};
+	LABEL { NAME "ISR_Save_acc"; ADDR $6e;};
+	LABEL { NAME "ISR_Save_x"; ADDR $6f;};
+	LABEL { NAME "ISR_Save_y"; ADDR $70;};
+	LABEL { NAME "ISR_RAM_71"; ADDR $71;};
+	LABEL { NAME "ISR_RAM_72"; ADDR $72;};
+	LABEL { NAME "ISR_RAM_73"; ADDR $73;};
+	LABEL { NAME "ISR_RAM_74"; ADDR $74;};
+	LABEL { NAME "ISR_RAM_75"; ADDR $75;};
+	LABEL { NAME "ISR_RAM_76"; ADDR $76;};
+
+	LABEL { NAME "ButtonsBitfield"; ADDR $78; };
+	LABEL { NAME "Flags_79"; ADDR $79;};
+	LABEL { NAME "Flags_7a"; ADDR $7a;};
+	LABEL { NAME "Flags_7b"; ADDR $7b;};
+	LABEL { NAME "Flags_7c"; ADDR $7c;};
+	LABEL { NAME "Flags_7d"; ADDR $7d;};
+	LABEL { NAME "ButtonCounter"; ADDR $7e;};
+	LABEL { NAME "Ram7fCounter"; ADDR $7f;};
+	LABEL { NAME "DayofWeek"; ADDR $86; };
+	LABEL { NAME "ISR_RAM_87"; ADDR $87;};
+	LABEL { NAME "ISR_RAM_88"; ADDR $88;};
+	LABEL { NAME "ISR_RAM_89"; ADDR $89;};
+	LABEL { NAME "RTC_Hour"; ADDR $8a;};
+	LABEL { NAME "RTC_Minute"; ADDR $8b;};
+	LABEL { NAME "RAM_Test8f"; ADDR $8f;};
+	LABEL { NAME "RAM_Test90"; ADDR $90;};
+	LABEL { NAME "RAM_91"; ADDR $91;};
+	LABEL { NAME "RAM_92"; ADDR $92;};
+	LABEL { NAME "RAM_93"; ADDR $93;};
+	LABEL { NAME "RAM_94"; ADDR $94;};
+	LABEL { NAME "RAM_95"; ADDR $95;};
+	LABEL { NAME "RAM_96"; ADDR $96;};
+
+# Functions
+	LABEL { NAME "WaitLoop_1"; ADDR $8e28; COMMENT "0x8e28"; };
+	LABEL { NAME "WRITE_FONT_Small"; ADDR $8D58; COMMENT "0x8d58"; };
+	LABEL { NAME "WRITE_FONT_Medium1"; ADDR $8FAC; COMMENT "0x8fac"; };
+	LABEL { NAME "WRITE_FONT_Big"; ADDR $8e7d; COMMENT "0x8e7d"; };
+	LABEL { NAME "WRITE_FONT_Medium2"; ADDR $90e1; COMMENT "0x90e1"; };
+	LABEL { NAME "Print_Speed"; ADDR $B227;};
+	LABEL { NAME "Print_MPH"; ADDR $b204;};
+	LABEL { NAME "ReadRemoteButtons"; ADDR $9fec; COMMENT "0x9FEC"; };
+	LABEL { NAME "ReadALLButtons1"; ADDR $9fd8; COMMENT "0x9FD8"; };
+	LABEL { NAME "ReadALLButtons2"; ADDR $9fff; COMMENT "0x9FFF"; };
+	LABEL { NAME "ReadALLButtons3"; ADDR $a058; COMMENT "0xA058"; };
+	LABEL { NAME "ButtonDebounce"; ADDR $a0a5; COMMENT "0xA0A5"; };
+	LABEL { NAME "RAM_Reorganize"; ADDR $a1ef; COMMENT "0xA1EF"; };	
+	LABEL { NAME "XRAM_Corrupted"; ADDR $a380; COMMENT "0xA380"; };	
+	LABEL { NAME "EPROM_Corrupted"; ADDR $a3b3; COMMENT "0xA3B3"; };	
+	LABEL { NAME "RAM_Clear"; ADDR $a437 ; COMMENT "0xA437"; };
+	LABEL { NAME "STOP"; ADDR $a4d9 ; };
+	LABEL { NAME "really_often_called"; ADDR $a4c6 ; COMMENT "0xA4c6\n;IN: A, OUT: \n;Posibilities: 0x24, 0x33, 0x43, 0x84, 0xab";};
+	LABEL { NAME "CheckButtons"; ADDR $9fab; COMMENT "0x9fab";};
+	LABEL { NAME "CheckButtons_andCont"; ADDR $a4dc; COMMENT "0xa4dc";};
+	LABEL { NAME "WriteLCD_andCont"; ADDR $A4E4; COMMENT "0xa4ea";};
+	LABEL { NAME "WriteLCD"; ADDR $8c40; COMMENT "0x8c40";};
+	LABEL { NAME "WaitLoop_2"; ADDR $8aa5; COMMENT "0x8aa5";};
+	LABEL { NAME "ResetA_andCont"; ADDR $A4f4; COMMENT "0xa4f4";};
+	LABEL { NAME "ResetA"; ADDR $A4ff; COMMENT "0xa4ff";};
+	LABEL { NAME "EnInterruptandReturn"; ADDR $A4fb; COMMENT "0xa4fb";};
+	LABEL { NAME "ClearColumn"; ADDR $8ca0; COMMENT "0x8ca0";};
+	LABEL { NAME "ClearRow"; ADDR $8c89; COMMENT "0x8c89";};
+	LABEL { NAME "InitLCD"; ADDR $8c55; COMMENT "0x8c55";};
+	LABEL { NAME "DrawScreenwithInit"; ADDR $8cd7; COMMENT "0x8cd7";};
+	LABEL { NAME "jump_to_DrawScreenwithInit"; ADDR $8c52;};
+	LABEL { NAME "DrawScreenNOInit"; ADDR $8cda; COMMENT "0x8cda";};
+	LABEL { NAME "jump_to_DrawScreenNOInit"; ADDR $8c4f;};	
+	LABEL { NAME "WriteSmallChars1"; ADDR $8d19; COMMENT "0x8d19";};
+	LABEL { NAME "WriteBigChars"; ADDR $8e30; COMMENT "0x8e30";};
+	LABEL { NAME "WriteMediumChars2"; ADDR $908e; COMMENT "0x908e";};
+	LABEL { NAME "WriteMediumChars1"; ADDR $8f5f; COMMENT "0x8f5f";};
+	#LABEL { NAME "Screen_01"; ADDR $8d19; COMMENT "0x8d19";};
+	LABEL { NAME "Print_AlleFunktionenVerfuegbar"; ADDR $b152;};
+	LABEL { NAME "Print_Messbereichzuruckgeschaltet"; ADDR $b16f;};
+	LABEL { NAME "Print_Datengeloscht"; ADDR $b18c;};
+	LABEL { NAME "Print_Mo"; ADDR $b1b2;};
+	LABEL { NAME "Print_Di"; ADDR $b1bd;};
+	LABEL { NAME "Print_Mi"; ADDR $b1c8;};
+	LABEL { NAME "Print_Do"; ADDR $b1d3;};
+	LABEL { NAME "Print_Fr"; ADDR $b1de;};
+	LABEL { NAME "Print_Sa"; ADDR $b1e9;};
+	LABEL { NAME "Print_So"; ADDR $b1f4;};
+	LABEL { NAME "Print_Datum"; ADDR $b3c6;};
+	LABEL { NAME "Print_Umin"; ADDR $b4cb;};
+	LABEL { NAME "Print_Trip"; ADDR $b5f4;};
+	LABEL { NAME "Print_DSVT_1"; ADDR $b67d;};
+	LABEL { NAME "Print_DSVT_2"; ADDR $b742;};
+	LABEL { NAME "Print_DSVK_1"; ADDR $b8be;};
+	LABEL { NAME "Print_DSVK_2"; ADDR $b9fd;};
+	LABEL { NAME "Print_Aussentemp"; ADDR $bb07;};
+	LABEL { NAME "Print_min"; ADDR $bb71;};
+	LABEL { NAME "Print_maxT"; ADDR $bc60;};
+	LABEL { NAME "Print_Motortemp"; ADDR $bdac;};
+	LABEL { NAME "Print_Luftdruck"; ADDR $be3a;};
+	LABEL { NAME "Print_Tendenz"; ADDR $be5e;};
+	LABEL { NAME "Print_Hohe"; ADDR $be8c;};
+	LABEL { NAME "Print_Stoppuhr"; ADDR $beab;};
+	LABEL { NAME "Print_Beschl"; ADDR $bf9b;};
+	LABEL { NAME "Print_BatteriespannungVolt"; ADDR $c324;};
+	LABEL { NAME "Print_unter6Volt"; ADDR $cf0f;};
+	LABEL { NAME "Print_uber22Volt"; ADDR $cf25;};
+	LABEL { NAME "Print_Roadbook"; ADDR $daaa;};
+	LABEL { NAME "Print_Time"; ADDR $e049;};
+	LABEL { NAME "WriteGesamtKMtoLCD"; ADDR $b0f4; COMMENT "0xb0f4\n;IN:x=ROW, y=COL";};
+	LABEL { NAME "WriteGesamtkilometer"; ADDR $b582;};
+	LABEL { NAME "I2C_WriteByte01"; ADDR $8bdc; COMMENT "0x8bdc";};
+	LABEL { NAME "I2C_WriteByte02"; ADDR $8c0a; COMMENT "0x8c0a";};
+	LABEL { NAME "I2C_ToggleSCL"; ADDR $8c29; COMMENT "0x8c29";};
+	LABEL { NAME "I2C_04"; ADDR $8b92; COMMENT "0x8b92";};
+	LABEL { NAME "I2C_Read"; ADDR $8abb; COMMENT "0x8abb";};
+	LABEL { NAME "MainScreen"; ADDR $afea; COMMENT "0xafea";};
+	LABEL { NAME "TripScreenFirst"; ADDR $b029; COMMENT "0xb029";};
+	LABEL { NAME "TripScreen"; ADDR $b033; COMMENT "0xb033";};
+	LABEL { NAME "ParameterScreen"; ADDR $b019; COMMENT "0xb019";};
+
+	LABEL { NAME "CheckDOWNButton"; ADDR $b093; COMMENT "0xb093";};
+	LABEL { NAME "CheckUPButton"; ADDR $b0b3; COMMENT "0xb0b3";};
+	LABEL { NAME "CheckERButton"; ADDR $b09b; COMMENT "0xb09b";};
+	LABEL { NAME "CheckRemoteUPButton"; ADDR $b0a3; COMMENT "0xb0a3";};
+	LABEL { NAME "CheckRemoteDOWNButton"; ADDR $b0ab; COMMENT "0xb0ab";};
+	LABEL { NAME "Check_BLOCKING_ERButton"; ADDR $b0c3; COMMENT "0xb0c3";};
+	LABEL { NAME "Check_BLOCKING_DOWNButton"; ADDR $b0bb; COMMENT "0xb0bb";};
+	LABEL { NAME "Check_BLOCKING_UPButton"; ADDR $b0cb; COMMENT "0xb0cb";};
+	LABEL { NAME "CheckButtons_17"; ADDR $b0db; COMMENT "0xb0db";};
+	LABEL { NAME "Checkfirstpress_on_ALL_Buttons"; ADDR $b0e3; COMMENT "0xb0e3";};
+	LABEL { NAME "WaitforReleaseUPButton"; ADDR $b0ea; COMMENT "0xb0ea";};
+	LABEL { NAME "LCD_Change_Screen_Down"; ADDR $b01f; COMMENT "0xb01f";};
+	LABEL { NAME "LCD_Change_Screen_Up"; ADDR $afcf; COMMENT "0xafcf";};
+	LABEL { NAME "Init_LCD_Parametrierung"; ADDR $ec17; COMMENT "0xec17";};
+	LABEL { NAME "MainLoop"; ADDR $afc0; COMMENT "0xafc0";};
+	LABEL { NAME "ClearTripkm"; ADDR $bdc0;};
+	LABEL { NAME "Convert_ASCII_Zehner"; ADDR $fd24;};
+	LABEL { NAME "Convert_ASCII_Einer"; ADDR $fd2b;};
+	LABEL { NAME "RadumfangEinstellen"; ADDR $f29a;COMMENT "0xf29a";};
+	LABEL { NAME "Datensicherung"; ADDR $d304;};
+	LABEL { NAME "WriteStringtoLCD"; ADDR $b108;};
+	LABEL { NAME "SPI_ReadByte"; ADDR $a60e;};
+	LABEL { NAME "SPI_WriteByte"; ADDR $a5f3;};
+	LABEL { NAME "RTC_Write"; ADDR $a5a3;};
+	LABEL { NAME "RTC_Read"; ADDR $a5cb;};
+	LABEL { NAME "RTC_Check_PONC_Bit"; ADDR $a588;};
+	LABEL { NAME "RTC_Check_BUSY_Bit"; ADDR $a59c;};
+	LABEL { NAME "RTC_Init"; ADDR $a502;};
+	LABEL { NAME "RTC_Rd_Address"; ADDR $a51b;};
+	LABEL { NAME "RTC_Wr_Address"; ADDR $a55c;};
+	LABEL { NAME "Add_something_01"; ADDR $ac87;};
+	LABEL { NAME "Add_something_02"; ADDR $ace6;};
+	LABEL { NAME "Add_something_03"; ADDR $ad35;};
+	LABEL { NAME "Add_something_04"; ADDR $ad84;};
+	LABEL { NAME "Add_something_05"; ADDR $ade3;};
+	LABEL { NAME "Add_something_06"; ADDR $ae32;};
+	LABEL { NAME "Add_something_07"; ADDR $ae9f;};
+	LABEL { NAME "Add_something_08"; ADDR $aeed;};
+	LABEL { NAME "I2C_Write"; ADDR $8b06;};
+	LABEL { NAME "PincodeAbfrage"; ADDR $a627;};
+	LABEL { NAME "I2C_R_EPROM"; ADDR $89de;};
+	LABEL { NAME "I2C_W_EPROM"; ADDR $899b;};
+	LABEL { NAME "I2C_Check_EPROM"; ADDR $8a1e;};
+	LABEL { NAME "SetDayofWeek"; ADDR $fd80;};
+
+# Comments
+	LABEL {NAME "DeadCodeStart_b66c"; ADDR $b66c;};
+	LABEL {NAME "DeadCodeEnd_b66c"; ADDR $d303;};
+
+# Hardware vectors
+	RANGE { START $FFF4;    END   $FFFF; TYPE ADDRTABLE; };
+	LABEL { NAME "INT2_Power_On";   ADDR  $a9a2; };
+	LABEL { NAME "INT2Vector";   ADDR  $fff4;  SIZE 2; }; 
+	LABEL { NAME "TIM2";   ADDR  $a9bf; };
+	LABEL { NAME "TIM2Vector";   ADDR  $fff6;  SIZE 2; }; 
+	LABEL { NAME "TIM1";   ADDR  $aa39; };
+    LABEL { NAME "TIM1Vector";   ADDR  $fff8;  SIZE 2; }; 
+    LABEL { NAME "TIMX";   ADDR  $a926; };
+    LABEL { NAME "TIMXVector";   ADDR  $fffa;  SIZE 2; }; 
+    LABEL { NAME "INT1_SENSOR";   ADDR  $aa3b; };
+    LABEL { NAME "INT1Vector";   ADDR  $fffc;  SIZE 2; }; 
+    LABEL { NAME "RESET";   ADDR  $a19a; };
+	LABEL { NAME "ResetVector";   ADDR  $fffe;  SIZE 2;}; 
+
+# Peripherals
+	LABEL { NAME "TimerControl_Reg"; ADDR $ff; SIZE 1;};
+	LABEL { NAME "InterruptControl_Reg"; ADDR $fe; SIZE 1;};
+	LABEL { NAME "TimerX"; ADDR $fd; SIZE 1;};
+	LABEL { NAME "TimerX_Presc"; ADDR $fc; SIZE 1;};
+	LABEL { NAME "TIMER2"; ADDR $fb; SIZE 1;};
+	LABEL { NAME "TIMER1"; ADDR $fa; SIZE 1;};
+	LABEL { NAME "TIMER12_Presc"; ADDR $f9; SIZE 1;};
+	LABEL { NAME "RX_Buffer_Reg"; ADDR $f7; SIZE 1;};
+	LABEL { NAME "TX_Reg"; ADDR $f6; SIZE 1;};
+	LABEL { NAME "TXRX_Control_Reg"; ADDR $f5; SIZE 1;};
+	LABEL { NAME "TXRX_ReceiveMode_Reg"; ADDR $f4; SIZE 1;};
+	LABEL { NAME "PORTG"; ADDR $ee; SIZE 1;};
+	LABEL { NAME "PORTF"; ADDR $ec; SIZE 1;};
+	LABEL { NAME "PORTE_Dir_Reg"; ADDR $eb; SIZE 1;};
+	LABEL { NAME "PORTE"; ADDR $ea; SIZE 1;};
+	LABEL { NAME "PORTD_Dir_Reg"; ADDR $e9; SIZE 1;};
+	LABEL { NAME "PORTD"; ADDR $e8; SIZE 1;};
+	LABEL { NAME "PORTC_Dir_Reg"; ADDR $e5; SIZE 1;};
+	LABEL { NAME "PORTC"; ADDR $e4; SIZE 1;};
+	LABEL { NAME "PORTB_Dir_Reg"; ADDR $e3; SIZE 1;};
+	LABEL { NAME "PORTB"; ADDR $e2; SIZE 1;};
+	LABEL { NAME "PORTA_Dir_Reg"; ADDR $e1; SIZE 1;};
+	LABEL { NAME "PORTA"; ADDR $e0; SIZE 1;};
+
+# Fonts
+	LABEL { NAME "FONTS_SMALL"; ADDR $91c3; COMMENT "0x91c3";};
+	RANGE { START $91c3; END $9324; TYPE BYTETABLE; };
+	LABEL { NAME "FONTS_BIG"; ADDR $9325; COMMENT "0x9325";};
+	RANGE { START $9325; END $96c0; TYPE BYTETABLE; };
+	LABEL { NAME "FONTS_MED"; ADDR $96c1; COMMENT "0x96c1";};
+	RANGE { START $96c1; END $9858; TYPE BYTETABLE; };
+	#RANGE { START $985c; END $98ce; TYPE TEXTTABLE; };
+
+# Constants
+	Range {START $9859; END $98ce; TYPE BYTETABLE;};
+	LABEL { NAME "Constant_km_01"; ADDR $9859; COMMENT "0x9859";};
+	LABEL { NAME "Constant_km_02"; ADDR $985a; COMMENT "0x985a";};
+	LABEL { NAME "Const_985b"; ADDR $985b; COMMENT "0x985b";};
+	Range {START $f1e4; END $f202; TYPE BYTETABLE;};
+	LABEL { NAME "LF1E4"; ADDR $f1e4; COMMENT "0xf1e4";};
+
+	Range {START $fde6; END $fdf1; TYPE BYTETABLE;};
+
+# Strings
+	RANGE { START $98cf; END $9faa; TYPE TEXTTABLE; };
+	LABEL { NAME "StringStart"; ADDR $98cf; COMMENT "0x98cf"; };
+
+# Zero's and ff's
+	#RANGE { START $84a8; END $84ff; TYPE BYTETABLE; };
+	#RANGE { START $98af; END $98ce; TYPE BYTETABLE; };
+	RANGE { START $ff23; END $fff3; TYPE BYTETABLE; };
+
+# dont know yet
+	LABEL { NAME "TempTable_In"; ADDR $8000; COMMENT "0x8000"; };
+	LABEL { NAME "TempTable_Out"; ADDR $8100; COMMENT "0x8100"; };
+	LABEL { NAME "L8200"; ADDR $8200; COMMENT "0x8200 0x154, 340 Bytes"; };
+	LABEL { NAME "L8354"; ADDR $8354; COMMENT "0x8354 0x154, 340 Bytes"; };
+	LABEL { NAME "L84a8"; ADDR $84a8; COMMENT "0x84a8"; };
+	LABEL { NAME "L8500"; ADDR $8500; COMMENT "0x8500 0xf2, 242 Bytes"; };
+	LABEL { NAME "L85f2"; ADDR $85f2; COMMENT "0x85f2 0xf2, 242 Bytes"; };
+	LABEL { NAME "L86e4"; ADDR $86e4; COMMENT "0x86e4"; };
+	LABEL { NAME "L8700"; ADDR $8700; COMMENT "0x8700 0x13c, 316 Bytes"; };
+	LABEL { NAME "L8840"; ADDR $8840; COMMENT "0x8840 0x13c, 316 Bytes"; };
+	#LABEL { NAME "L8890"; ADDR $8890; COMMENT "0x8890"; };
+	LABEL { NAME "Table_FD53"; ADDR $fd53; COMMENT "0xfd53"; };
+	RANGE { START $fd53; END $fd62; TYPE BYTETABLE; };
+	RANGE { START $8000; END $80ff; TYPE BYTETABLE; };
+	RANGE { START $8100; END $81ff; TYPE BYTETABLE; };
+	RANGE { START $8200; END $888f; TYPE WORDTABLE; };
+	RANGE { START $8890; END $897f; TYPE WORDTABLE; };
